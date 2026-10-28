@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Positronic-AI — Coming soon</title>
+<meta name="description" content="Soon, I return — more powerful than ever. Positronic-AI is coming soon.">
+<meta name="theme-color" content="#020817">
+<meta name="color-scheme" content="dark">
+<meta property="og:title" content="Positronic-AI — Coming soon">
+<meta property="og:description" content="Soon, I return — more powerful than ever.">
+<meta property="og:image" content="https://positronic-ai.network/assets/poster.jpg">
+<meta property="og:type" content="website">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preload" href="/assets/fonts/unbounded.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+  @font-face { font-family: 'Unbounded'; src: url('/assets/fonts/unbounded.woff2') format('woff2'); font-weight: 200 900; font-display: swap; }
+  @font-face { font-family: 'IBM Plex Sans'; src: url('/assets/fonts/ibm-plex-sans-latin-400-normal.woff2') format('woff2'); font-weight: 400; font-display: swap; }
+  @font-face { font-family: 'IBM Plex Sans'; src: url('/assets/fonts/ibm-plex-sans-latin-500-normal.woff2') format('woff2'); font-weight: 500; font-display: swap; }
+
+  :root {
+    --abyss: #020817;     /* page */
+    --midnight: #071D47;  /* light pool behind the core */
+    --cobalt: #1F5FD1;    /* structure, rings */
+    --ion: #69B4FF;       /* energy: arcs, ticks, charge */
+    --frost: #EAF3FF;     /* type */
+    --steel: #8EA4C4;     /* quiet text */
+    --reactor: min(620px, 42vw, 78vh);
+    --rider: calc(var(--reactor) * .115);
+    --display: 'Unbounded', 'Arial Black', system-ui, sans-serif;
+    --text: 'IBM Plex Sans', system-ui, 'Segoe UI', sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    min-height: 100vh; min-height: 100dvh; overflow-x: hidden;
+    background: var(--abyss); color: var(--frost); font-family: var(--text);
+    display: grid; grid-template-rows: auto 1fr auto;
+  }
+  a { color: inherit; }
+  :focus-visible { outline: 2px solid var(--ion); outline-offset: 3px; }
+
+  /* ---------- top bar ---------- */
+  .top { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 24px clamp(16px, 4.5vw, 64px); position: relative; z-index: 2; }
+  .brand { display: flex; align-items: center; gap: 14px; text-decoration: none; }
+  .brand b { font-family: var(--display); font-weight: 600; font-size: 17px; letter-spacing: .02em; }
+  .mail { font-size: 15px; color: var(--steel); text-decoration: none; border-bottom: 1px solid rgba(142, 164, 196, .35); padding-bottom: 2px; transition: color .2s, border-color .2s; }
+  .mail:hover { color: var(--frost); border-color: var(--ion); }
+
+  /* Logo with its own spinning ring (used in the bar and on the orbit). */
+  .ringed { position: relative; display: block; width: 52px; height: 52px; flex: none; }
+  .ringed img { width: 100%; height: 100%; display: block; border-radius: 50%; position: relative;
+    box-shadow: 0 0 18px rgba(105, 180, 255, .55); }
+  .ringed::before, .ringed::after { content: ""; position: absolute; inset: -14%; border-radius: 50%; pointer-events: none; }
+  .ringed::after { border: 1px solid rgba(105, 180, 255, .3); }
+  .ringed::before {
+    background: conic-gradient(transparent 0 58%, var(--ion) 80%, #fff 84%, transparent 86%);
+    -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 2.5px), #000 calc(100% - 2px));
+            mask: radial-gradient(farthest-side, transparent calc(100% - 2.5px), #000 calc(100% - 2px));
+    animation: spin 3s linear infinite;
+  }
+
+  /* ---------- hero ---------- */
+  .hero {
+    position: relative; display: grid; align-items: center;
+    grid-template-columns: minmax(0, 1fr) var(--reactor);
+    gap: clamp(24px, 4vw, 72px); padding: 0 clamp(16px, 4.5vw, 64px);
+    overflow-x: clip; /* the core's ripples fade off-screen without making the page scroll sideways */
+  }
+
+  .copy { container-type: inline-size; min-width: 0; width: 100%; }
+  h1 {
+    margin: 0; font-family: var(--display); font-weight: 800;
+    /* "more powerful" is the longest line at 8.9em: size the type so it always fits on one line. */
+    font-size: clamp(28px, 11.1cqi, 104px); line-height: 1.02; letter-spacing: -.035em;
+    position: relative; z-index: 2;
+  }
+  /* Each line charges from outline to solid as the core ignites. */
+  h1 span {
+    display: block; width: fit-content; white-space: nowrap;
+    color: transparent; -webkit-text-stroke: 1px rgba(105, 180, 255, .55);
+    background: linear-gradient(90deg, var(--frost), var(--frost)) no-repeat 0 0 / 0% 100%;
+    -webkit-background-clip: text; background-clip: text;
+    animation: charge 1s cubic-bezier(.7, 0, .2, 1) forwards;
+  }
+  h1 span:nth-child(1) { animation-delay: .9s; }
+  h1 span:nth-child(2) { animation-delay: 1.15s; }
+  h1 span:nth-child(3) { animation-delay: 1.4s; }
+  h1 span:nth-child(4) { animation-delay: 1.65s; }
+  @keyframes charge { to { background-size: 100% 100%; -webkit-text-stroke-color: transparent; } }
+
+  /* ---------- reactor ---------- */
+  .reactor { position: relative; width: var(--reactor); aspect-ratio: 1; justify-self: center; }
+  .reactor::before { /* ripples of the core spreading over the page */
+    content: ""; position: absolute; inset: -60%; border-radius: 50%; pointer-events: none; z-index: -1;
+    background:
+      radial-gradient(circle, rgba(31, 95, 209, .38) 0%, rgba(7, 29, 71, .55) 28%, transparent 60%),
+      repeating-radial-gradient(circle, transparent 0 58px, rgba(105, 180, 255, .055) 59px 60px);
+    -webkit-mask: radial-gradient(circle, #000 30%, transparent 70%); mask: radial-gradient(circle, #000 30%, transparent 70%);
+  }
+  .rings { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+  .rings g { transform-origin: 300px 300px; transform-box: view-box; }
+  .ticks { animation: spin 140s linear infinite; }
+  .dashes { animation: spin 70s linear infinite reverse; }
+  .arc { animation: spin 7s linear infinite; }
+
+  .core {
+    position: absolute; inset: 19%; border-radius: 50%; overflow: hidden; background: #000;
+    box-shadow: 0 0 0 1px rgba(105, 180, 255, .5), 0 0 60px rgba(105, 180, 255, .45), 0 0 160px rgba(31, 95, 209, .55);
+    clip-path: circle(0% at 50% 50%);
+    animation: ignite 1.4s cubic-bezier(.6, 0, .2, 1) .35s forwards;
+  }
+  .core video { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .core::after { /* glass edge */
+    content: ""; position: absolute; inset: 0; border-radius: 50%; pointer-events: none;
+    box-shadow: inset 0 0 40px rgba(2, 8, 23, .85), inset 0 0 2px rgba(234, 243, 255, .6);
+  }
+  @keyframes ignite { to { clip-path: circle(50% at 50% 50%); } }
+
+  .orbit { position: absolute; inset: 4.5%; border-radius: 50%; pointer-events: none; }
+  .orbit .ringed {
+    position: absolute; left: 50%; top: 0; width: var(--rider); height: var(--rider);
+    margin: calc(var(--rider) / -2) 0 0 calc(var(--rider) / -2);
+    animation: spin 48s linear infinite reverse; /* stays upright while it travels */
+  }
+
+  .sound {
+    position: absolute; left: 50%; bottom: 13.5%; transform: translateX(-50%); z-index: 3;
+    display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; cursor: pointer;
+    background: rgba(2, 8, 23, .66); color: var(--frost); border: 1px solid rgba(105, 180, 255, .45);
+    backdrop-filter: blur(6px); transition: background .2s, border-color .2s;
+  }
+  .sound:hover { background: rgba(31, 95, 209, .5); border-color: var(--ion); }
+  .sound svg { width: 20px; height: 20px; }
+  .sound[aria-pressed="false"] .i-on, .sound[aria-pressed="true"] .i-off { display: none; }
+
+  /* Ignition: rings come up, then the orbit starts. */
+  .rings { opacity: 0; animation: appear 1.2s ease-out .1s forwards; }
+  .orbit { opacity: 0; animation: spin 48s linear infinite, fade-in 1s ease-out 1.2s forwards; }
+  @keyframes appear { from { opacity: 0; transform: scale(.94); } to { opacity: 1; transform: none; } }
+  @keyframes fade-in { to { opacity: 1; } }
+
+  /* ---------- bottom bar ---------- */
+  .bottom { display: flex; align-items: center; justify-content: space-between; gap: 16px 32px; flex-wrap: wrap;
+    padding: 24px clamp(16px, 4.5vw, 64px) 28px; position: relative; z-index: 2; }
+  .status { display: flex; align-items: center; gap: 16px; font-size: 16px; font-weight: 500; }
+  .charge { position: relative; width: clamp(120px, 18vw, 240px); height: 3px; border-radius: 3px; background: rgba(105, 180, 255, .18); overflow: hidden; }
+  .charge::after {
+    content: ""; position: absolute; inset: 0; width: 40%;
+    background: linear-gradient(90deg, transparent, var(--ion), #fff, transparent);
+    animation: sweep 2.4s ease-in-out infinite;
+  }
+  @keyframes sweep { from { transform: translateX(-100%); } to { transform: translateX(260%); } }
+  .legal { color: var(--steel); font-size: 13px; }
+  .mail-alt { display: none; }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ---------- small screens ---------- */
+  @media (max-width: 860px) {
+    :root { --reactor: min(88vw, 52vh, 460px); }
+    .hero { grid-template-columns: 1fr; justify-items: start; align-content: start; gap: 8px; padding-top: 4px; }
+    .reactor { order: -1; margin-bottom: 8px; }
+    .mail { font-size: 14px; }
+  }
+  @media (max-width: 520px) {
+    .top { padding-top: 18px; }
+    .brand b { font-size: 15px; }
+    .ringed { width: 44px; height: 44px; }
+    .top .mail { display: none; } /* the address moves to the bottom bar */
+    .bottom .mail-alt { display: inline; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    h1 span { color: var(--frost); -webkit-text-stroke: 0; }
+    .core { clip-path: none; }
+    .rings, .orbit { opacity: 1; }
+  }
+</style>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="/" aria-label="Positronic-AI home">
+    <span class="ringed"><img src="/assets/logo.png" alt="" width="52" height="52"></span>
+    <b>Positronic-AI</b>
+  </a>
+  <a class="mail" href="mailto:info@positronic-ai.network">info@positronic-ai.network</a>
+</header>
+
+<main class="hero">
+  <div class="copy">
+  <h1 aria-label="Soon, I return — more powerful than ever.">
+    <span aria-hidden="true">Soon,</span>
+    <span aria-hidden="true">I return —</span>
+    <span aria-hidden="true">more powerful</span>
+    <span aria-hidden="true">than ever.</span>
+  </h1>
+  </div>
+
+  <div class="reactor">
+    <svg class="rings" viewBox="0 0 600 600" aria-hidden="true">
+      <defs>
+        <linearGradient id="arcfade" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#69B4FF" stop-opacity="0"/>
+          <stop offset="1" stop-color="#EAF3FF"/>
+        </linearGradient>
+      </defs>
+      <circle cx="300" cy="300" r="296" fill="none" stroke="#1F5FD1" stroke-opacity=".35"/>
+      <g class="ticks" id="ticks"></g>
+      <g class="dashes">
+        <circle cx="300" cy="300" r="246" fill="none" stroke="#69B4FF" stroke-opacity=".5" stroke-width="2" stroke-dasharray="90 26 14 26"/>
+      </g>
+      <circle cx="300" cy="300" r="228" fill="none" stroke="#1F5FD1" stroke-opacity=".55"/>
+      <g class="arc">
+        <path d="M300 72 A228 228 0 0 1 528 300" fill="none" stroke="url(#arcfade)" stroke-width="3" stroke-linecap="round"/>
+      </g>
+    </svg>
+
+    <div class="core">
+      <video id="hero" src="/assets/hero.mp4?v=2" poster="/assets/poster.jpg?v=2" autoplay muted loop playsinline preload="auto" aria-hidden="true"></video>
+    </div>
+
+    <div class="orbit" aria-hidden="true">
+      <span class="ringed"><img src="/assets/logo.png" alt="" width="74" height="74"></span>
+    </div>
+
+    <button type="button" class="sound" id="sound" aria-pressed="false" aria-label="Turn sound on">
+      <svg class="i-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="m23 9-6 6M17 9l6 6"/></svg>
+      <svg class="i-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/></svg>
+    </button>
+  </div>
+</main>
+
+<footer class="bottom">
+  <div class="status"><span class="charge" aria-hidden="true"></span><span>Coming soon</span></div>
+  <a class="mail mail-alt" href="mailto:info@positronic-ai.network">info@positronic-ai.network</a>
+  <span class="legal">© 2026 Positronic-AI</span>
+</footer>
+
+<script>
+(function () {
+  // 120 ticks on the outer scale, every tenth one longer.
+  var g = document.getElementById('ticks'), ns = 'http://www.w3.org/2000/svg';
+  for (var i = 0; i < 120; i++) {
+    var l = document.createElementNS(ns, 'line'), long = i % 10 === 0;
+    l.setAttribute('x1', 300); l.setAttribute('x2', 300);
+    l.setAttribute('y1', 8); l.setAttribute('y2', long ? 30 : 18);
+    l.setAttribute('stroke', long ? '#69B4FF' : '#1F5FD1');
+    l.setAttribute('stroke-opacity', long ? '.9' : '.7');
+    l.setAttribute('stroke-width', long ? 2 : 1);
+    l.setAttribute('transform', 'rotate(' + i * 3 + ' 300 300)');
+    g.appendChild(l);
+  }
+
+  var video = document.getElementById('hero'), sound = document.getElementById('sound');
+  sound.addEventListener('click', function () {
+    var on = sound.getAttribute('aria-pressed') !== 'true';
+    video.muted = !on;
+    if (on && video.paused) video.play().catch(function () {});
+    sound.setAttribute('aria-pressed', String(on));
+    sound.setAttribute('aria-label', on ? 'Turn sound off' : 'Turn sound on');
+  });
+})();
+</script>
+</body>
+</html>
